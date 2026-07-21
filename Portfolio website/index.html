@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<title>Giovanne E. Rabe — Portfolio</title>
+<style>
+  :root{  
+    --bg:#07130d;
+    --bg-2:#0c1c14;
+    --card:#0e2118;
+    --card-border:#1c3a29;
+    --green:#22c55e;
+    --green-light:#7ef0a8;
+    --blue:#38bdf8;
+    --text:#eaf5ee;
+    --text-2:#a9c2b3;
+    --text-muted:#6f8a7a;
+    --radius:16px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:
+        radial-gradient(circle at 80% 35%,
+            rgba(34,197,94,.20) 0%,
+            rgba(34,197,94,.10) 30%,
+            transparent 60%),
+        linear-gradient(
+            90deg,
+            #04110b 0%,
+            #07130d 45%,
+            #0d2a1b 100%
+        );
+
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;
+}
+  .wrap{max-width:1200px; margin:0 auto; padding:0 24px;}
+  a{color:inherit; text-decoration:none;}
+  ul{list-style:none;}
+
+  /* NAV */
+  header{
+    position:sticky; top:0; z-index:100;
+    background:rgba(7,19,13,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--card-border);
+  }
+  nav.wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 24px;
+  }
+  .logo{font-size:20px; font-weight:700;}
+  .logo span{color:var(--green);}
+  .nav-links{
+    display:none;
+}
+
+.nav-links.active{
+    display:flex;
+    flex-direction:column;
+    position:absolute;
+    top:75px;
+    right:20px;
+    width:220px;
+    background:var(--card);
+    border:1px solid var(--card-border);
+    border-radius:12px;
+    padding:20px;
+    gap:18px;
+    box-shadow:0 15px 30px rgba(0,0,0,.3);
+}
+
+
+@media(min-width:900px){
+    .nav-links{
+        display:flex;
+        position:static;
+        flex-direction:row;
+        gap:32px;
+        background:none;
+        border:none;
+        padding:0;
+        width:auto;
+        box-shadow:none;
+    }
+}
+  .nav-links a{
+    position: relative;
+    color: var(--text-2);
+    font-size: 15px;
+    text-decoration: none;
+    transition: color .3s ease;
+}
+
+.nav-links a::after{
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -6px;
+    width: 0;
+    height: 3px;
+    background: var(--green); /* o var(--blue) kung gusto mong blue */
+    border-radius: 10px;
+    transform: translateX(-50%);
+    transition: width .3s ease;
+}
+
+.nav-links a:hover{
+    color: var(--text);
+}
+
+.nav-links a:hover::after{
+    width: 70%;
+}
+  
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    padding:12px 22px;
+    border-radius:999px;
+    font-weight:600;
+    font-size:14px;
+    cursor:pointer;
+    border:1px solid transparent;
+    transition:all .3s ease;
+}
+
+
+
+.btn::after{
+    content:"→";
+    transition:transform .3s ease;  
+}
+
+.btn:hover{
+    transform: translate(-7px,-7px);
+}
+
+.btn:hover::before{
+    transform: translate(7px,7px);
+}
+
+.btn:hover::after{
+    transform:translateX(6px);
+}
+
+  .btn:hover{transform:translateY(-1px);}
+  .btn-primary{background:var(--green); color:#04160c;}
+  .btn-outline{background:transparent; border-color:var(--card-border); color:var(--text);}
+  .nav-cta{display:none;}
+  @media(min-width:900px){ .nav-cta{display:inline-flex;} }
+  .menu-toggle{display:block; background:none; border:none; color:var(--text); font-size:26px; cursor:pointer;}
+  @media(min-width:900px){ .menu-toggle{display:none;} }
+  
+  /* SECTION */
+  section{padding:88px 0;}
+  .eyebrow{
+    display:flex; align-items:center; gap:10px;
+    color:var(--green); font-size:13px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+    margin-bottom:18px;
+  }
+  .eyebrow::before{content:""; width:24px; height:2px; background:var(--green); display:inline-block;}
+  h1,h2,h3{font-weight:800; line-height:1.15;}
+  h2{font-size:clamp(28px,4vw,42px); margin-bottom:36px;}
+
+  /* HERO */
+  .hero{
+    padding-top:70px;
+    position:relative;
+    overflow:hidden;
+}
+  .hero-grid{
+    display:grid; grid-template-columns:1fr; gap:48px; align-items:center;
+  }
+  @media(min-width:960px){ .hero-grid{grid-template-columns:1.1fr 0.9fr;} }
+  .badge{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--card); border:1px solid var(--card-border);
+    padding:8px 16px; border-radius:999px; font-size:13px; color:var(--text-2);
+    margin-bottom:22px;
+  }
+  .dot{width:8px; height:8px; border-radius:50%; background:var(--green);}
+  .hero h1{font-size:clamp(36px,6vw,58px);}
+  .hero h1 .accent{color:var(--blue);}
+  .hero p.lead{color:var(--text-2); font-size:19px; margin:18px 0 20px; max-width:520px;}
+  .hero p.desc{color:var(--text-2); font-size:16px; max-width:560px; margin-bottom:32px;}
+  .hero-actions{display:flex; gap:14px; flex-wrap:wrap;}
+
+  .hero-photo-card{
+    position: relative;
+    background: linear-gradient(160deg,#0e2b1c,#0a1a12);
+    border:1px solid var(--card-border);
+    border-radius:24px;
+    padding:16px;
+
+    z-index: 1;
+
+     animation: floating 4s ease-in-out infinite;
+
+    box-shadow:
+        0 0 30px rgba(34,197,94,.25),
+        0 0 60px rgba(56,189,248,.15);
+  }
+ 
+  .hero-photo-card::before{
+    content: "";
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle,
+        rgba(34,197,94,.45) 0%,
+        rgba(34,197,94,.20) 40%,
+        transparent 75%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    filter: blur(60px);
+}  
+
+  .hero-photo-card{
+    animation: floating 4s ease-in-out infinite;
+}
+
+   
+
+@keyframes floating{
+    0%{
+        transform: translateY(0px);
+    }
+    50%{
+        transform: translateY(-15px);
+    }
+    100%{
+        transform: translateY(0px);
+    }
+}
+
+@keyframes pulseGlow{
+
+    0%{
+        box-shadow:0 0 15px rgba(56,189,248,.35);
+    }
+
+    50%{
+        box-shadow:0 0 35px rgba(56,189,248,.75);
+    }
+
+    100%{
+        box-shadow:0 0 15px rgba(56,189,248,.35);
+    }
+
+}
+
+  .hero-photo-card img{width:100%; border-radius:16px; display:block; aspect-ratio:4/5; object-fit:cover; background:#123322;}
+  .tag-float{
+    position:absolute; top:32px; right:32px;
+    background:rgba(7,19,13,0.85); border:1px solid var(--card-border);
+    padding:8px 14px; border-radius:999px; font-size:13px; backdrop-filter:blur(6px);
+  }
+  .info-float{
+    position:absolute; left:32px; right:32px; bottom:32px;
+    background:rgba(7,19,13,0.85); border:1px solid var(--card-border);
+    padding:14px 18px; border-radius:14px; backdrop-filter:blur(6px);
+    display:flex; justify-content:space-between; align-items:center; font-size:13px;
+  }
+  .info-float .status{color:var(--green); display:flex; align-items:center; gap:6px;}
+
+  /* ABOUT */
+  .about-grid{display:grid; grid-template-columns:1fr; gap:40px;}
+  @media(min-width:960px){ .about-grid{grid-template-columns:1.4fr 1fr;} }
+  .about-text p{color:var(--text-2); margin-bottom:18px; max-width:640px;}
+  .about-text b{color:var(--text);}
+  .chip-row{display:flex; flex-wrap:wrap; gap:10px; margin:22px 0;}
+  .chip{
+    background:var(--card); border:1px solid var(--card-border);
+    padding:9px 16px; border-radius:999px; font-size:14px; color:var(--text-2);
+  }
+  .side-cards{display:flex; flex-direction:column; gap:20px;}
+  .side-card{
+    position: relative;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    padding: 26px;
+    overflow: hidden;
+    transition: all .35s ease;
+}
+
+.side-card:hover{
+
+    transform: translateY(-8px);
+
+    border-color: var(--blue);
+
+    box-shadow:
+        0 0 20px rgba(34,197,94,.18),
+        0 10px 35px rgba(34,197,94,.12);
+
+}
+
+.side-card:hover::before{
+    opacity: 1;
+}
+
+
+  .side-card .icon{
+    width:44px; height:44px; border-radius:12px; background:var(--bg-2);
+    display:flex; align-items:center; justify-content:center; font-size:20px; margin-bottom:14px;
+  }
+  .side-card h3{font-size:19px; margin-bottom:8px;}
+  .side-card .role{font-weight:700; color:var(--text);}
+  .side-card .muted{color:var(--text-muted); font-size:14px;}
+
+  /* SKILLS */
+  .skill-box-grid{display:grid; grid-template-columns:1fr; gap:20px; margin-bottom:36px;}
+  
+  @media(min-width:800px){ .skill-box-grid{grid-template-columns:1fr 1fr;} }
+  .skill-box{
+    position: relative;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    padding: 28px;
+    overflow: hidden;
+    transition: .3s ease;
+}
+
+.skill-box::before{
+    content: "";
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    left: var(--x);
+    top: var(--y);
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity .25s ease;
+    pointer-events: none;
+}
+
+.skill-box:hover{
+    transform:translateY(-8px);
+
+    border-color:var(--blue);
+
+    box-shadow:
+        0 0 20px rgba(34,197,94,.18),
+        0 10px 35px rgba(34,197,94,.12);
+}
+
+.skill-box:hover::before{
+    transform:translateX(120%);
+}
+
+  .skill-box .head{display:flex; align-items:center; gap:12px; margin-bottom:18px; font-weight:700; font-size:17px;}
+  .skill-box .icon-sq{width:36px; height:36px; border-radius:9px; background:var(--bg-2); display:flex; align-items:center; justify-content:center;}
+  .pill-row{display:flex; flex-wrap:wrap; gap:10px;}
+  .pill{background:var(--bg-2); border:1px solid var(--card-border); color:var(--text-2); padding:8px 16px; border-radius:999px; font-size:14px;}
+  .core-skills-title{font-weight:700; font-size:18px; margin-bottom:16px;}
+
+  /* SERVICES */
+  .service-grid{display:grid; grid-template-columns:1fr; gap:20px;}
+  @media(min-width:700px){ .service-grid{grid-template-columns:1fr 1fr;} }
+  @media(min-width:1050px){ .service-grid{grid-template-columns:1fr 1fr 1fr;} }
+  .service-card{
+    position:relative;
+    background:var(--card);
+    border:1px solid var(--card-border);
+    border-radius:var(--radius);
+    padding:28px;
+    overflow:hidden;
+
+    transition:all .35s ease;
+}
+  .service-card:hover{
+    transform:translateY(-8px);
+
+    border-color:var(--blue);
+
+    box-shadow:
+        0 0 20px rgba(34,197,94,.18),
+        0 10px 35px rgba(34,197,94,.12);
+}
+  .service-card .icon-sq{width:44px; height:44px; border-radius:12px; background:var(--bg-2); display:flex; align-items:center; justify-content:center; margin-bottom:16px; font-size:20px;}
+  .service-card h3{font-size:19px; margin-bottom:14px;}
+  .service-card li{color:var(--text-2); font-size:14px; margin-bottom:9px; padding-left:16px; position:relative;}
+  .service-card li::before{content:""; width:5px; height:5px; border-radius:50%; background:var(--green); position:absolute; left:0; top:9px;}
+
+  /* PROJECTS */
+  .project-grid{display:grid; grid-template-columns:1fr; gap:24px;}
+  @media(min-width:700px){ .project-grid{grid-template-columns:1fr 1fr;} }
+  @media(min-width:1050px){ .project-grid{grid-template-columns:1fr 1fr 1fr;} }
+  .project-card{
+    position:relative;
+    background:var(--card);
+    border:1px solid var(--card-border);
+    border-radius:var(--radius);
+    overflow:hidden;
+
+    transition:all .35s ease;
+}
+  .project-card:hover{
+    transform:translateY(-8px);
+
+    border-color:var(--blue);
+
+    box-shadow:
+        0 0 20px rgba(34,197,94,.18),
+        0 10px 35px rgba(34,197,94,.12);
+}
+  .project-thumb{
+    height:190px; cursor:pointer; overflow:hidden;
+    background:repeating-linear-gradient(45deg,#0e2418,#0e2418 10px,#0a1b12 10px,#0a1b12 20px);
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+  }
+  .project-thumb img{width:100%; height:100%; object-fit:cover; display:block; transition:transform .3s;}
+  .project-thumb:hover img{transform:scale(1.04);}
+  .project-body{padding:22px;}
+  .project-body h3{font-size:19px; margin-bottom:10px;}
+  .project-body p{color:var(--text-2); font-size:14px; margin-bottom:16px;}
+  .project-tags{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px;}
+  .project-tags span{background:var(--bg-2); border:1px solid var(--card-border); color:var(--text-2); font-size:12px; padding:6px 12px; border-radius:999px;}
+  .project-link{color:var(--green); font-weight:600; font-size:14px;}
+
+  /* CONTACT */
+  .contact-card{
+    background:var(--card); border:1px solid var(--card-border);
+    border-radius:var(--radius); padding:48px; text-align:center;
+  }
+  .contact-card h2{margin-bottom:14px;}
+  .contact-card p{color:var(--text-2); margin-bottom:28px;}
+
+  footer{border-top:1px solid var(--card-border); padding:28px 0; text-align:center; color:var(--text-muted); font-size:14px;}
+
+  /* LIGHTBOX */
+  .contact-grid{
+    display:grid;
+    grid-template-columns:1fr 1.5fr;
+    gap:30px;
+}
+
+.contact-info{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.contact-box{
+    position:relative;
+    overflow:hidden;
+
+    display:flex;
+    gap:16px;
+    align-items:center;
+
+    background:var(--card);
+    border:1px solid var(--card-border);
+    border-radius:18px;
+    padding:20px;
+
+    transition:.35s ease;
+}
+
+.contact-box::before{
+    content:"";
+    position:absolute;
+
+    top:0;
+    left:-100%;
+
+    width:100%;
+    height:100%;
+
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(34,197,94,.18),
+        transparent
+    );
+
+    transition:.6s;
+}
+
+
+.contact-box:hover{
+
+    transform:translateY(-6px);
+
+    border-color:#00c8ff;
+
+    box-shadow:
+        0 15px 35px rgba(34,197,94,.18);
+}
+
+.contact-icon{
+    width:72px;
+    height:72px;
+    border-radius:20px;
+    background:#0d3322;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:40px;
+    color:var(--green);
+    
+}
+
+.contact-icon i{
+    font-size:40px;
+}
+
+.contact-box span{
+    color:var(--text-muted);
+    font-size:13px;
+}
+
+.contact-box h3{
+    font-size:18px;
+}
+
+
+.contact-box span{
+    font-size:14px;
+}
+
+.contact-work{
+    background:var(--card);
+    border:1px solid var(--card-border);
+    border-radius:18px;
+    padding:24px;
+}
+
+.contact-work h4{
+    color:var(--green);
+    margin-bottom:12px;
+}
+
+.contact-work p{
+    color:var(--text-2);
+}
+
+.contact-form{
+    background:var(--card);
+    border:1px solid var(--card-border);
+    border-radius:18px;
+    padding:32px;
+}
+
+.two-col{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+}
+
+.contact-form label{
+    display:block;
+    margin:18px 0 8px;
+    color:var(--text-muted);
+    font-size:13px;
+}
+
+.contact-form input,
+.contact-form textarea{
+    width:100%;
+    background:#16311f;
+    border:1px solid var(--card-border);
+    border-radius:14px;
+    padding:15px;
+    color:white;
+    font-size:15px;
+}
+
+.contact-form textarea{
+    height:120px;
+    resize:none;
+}
+
+.send-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+
+    margin-top:24px;
+    padding:15px 28px;
+
+    background:var(--green);
+    color:#04160c;
+
+    border:none;
+    border-radius:999px;
+
+    font-size:16px;
+    font-weight:600;
+
+    cursor:pointer;
+    transition:all .35s ease;
+
+    /* Walang glow kapag normal */
+    box-shadow:none;
+}
+
+.send-btn:hover{
+    transform:translateY(-5px);
+
+    background:#2ddf6b;
+
+    /* Lalabas lang ang blue glow kapag hover */
+    box-shadow:
+        0 0 10px rgba(56,189,248,.45),
+        0 5px 15px rgba(56,189,248,.35);
+}
+
+@media(max-width:900px){
+
+.contact-grid{
+    grid-template-columns:1fr;
+}
+
+.two-col{
+    grid-template-columns:1fr;
+}
+
+}
+  .lightbox-overlay{
+    display:none; position:fixed; inset:0; background:rgba(3,10,7,0.88);
+    z-index:999; align-items:flex-start; justify-content:center;
+    overflow-y:auto; padding:60px 20px;
+  }
+  .lightbox-content{max-width:720px; width:100%; position:relative;}
+  .lightbox-header{display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;}
+  .lightbox-header h3{color:var(--text); font-size:18px;}
+  .lightbox-close{
+    width:38px; height:38px; border-radius:50%; background:var(--card);
+    border:1px solid var(--card-border); color:var(--text); font-size:20px; cursor:pointer;
+  }
+  .lightbox-images{display:flex; flex-direction:column; gap:16px;}
+  .lightbox-images img{width:100%; border-radius:12px; border:1px solid var(--card-border); display:block;}
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <div class="logo">Giovanne<span>.</span></div>
+    <button class="menu-toggle">
+☰
+</button>
+    <ul class="nav-links" id="navMenu">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#contact" class="btn btn-primary nav-cta">Contact Me</a>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="badge"><span class="dot"></span> Available for opportunities</div>
+      <h1>Hi, I'm <span class="accent">Giovanne E. Rabe</span></h1>
+      <p class="lead">Aspiring Data Analyst · Virtual Assistant</p>
+      <p class="desc">I'm a Bachelor of Science in Information Technology student with a passion for transforming data into meaningful insights. I enjoy creating interactive Excel dashboards, organizing information, solving problems, and continuously learning new technologies. Beyond technology.</p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn btn-primary">View Projects</a>
+        <a href="#contact" class="btn btn-outline">Contact Me</a>
+      </div>
+    </div>
+    <div class="hero-photo-card">
+      <!-- ============================================================
+           PROFILE PICTURE GOES HERE
+           - Palitan ang src="profile.jpg" ng path/filename ng picture mo
+             (hal. "images/profile.jpg" o kung anong pangalan ng file mo)
+           - Recommended: square-ish o 4:5 portrait crop, at least 800x1000px
+           - Kung naka-upload ka via Claude/host, siguraduhin tugma ang filename
+      ============================================================= -->
+      <img src="Portfolio_Picture.png" alt="Giovanne E. Rabe">
+      <div class="info-float">
+        <div>
+          <div style="color:var(--text-muted); font-size:12px;">Virtual Assistant</div>
+          <div style="font-weight:700;">Giovanne E. Rabe</div>
+        </div>
+        <div class="status"><span class="dot"></span> Available</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap about-grid">
+    <div class="about-text">
+      <div class="eyebrow">About me</div>
+      <h2>Data meets creativity</h2>
+      <p>Hello! I'm Giovanne E. Rabe, currently pursuing a <b>Bachelor of Science in Information Technology</b> at ICCT Colleges – Institute of Creative Computer Technology.</p>
+      <p>I enjoy working with spreadsheets, organizing data, creating dashboards, and solving analytical problems. My long-term goal is to become a professional Data Analyst.</p>
+      <div class="chip-row">
+        
+      </div>
+      <p>Outside of academics, I enjoy developing both my technical and creative skills. These experiences have taught me discipline, adaptability, and continuous improvement—qualities I bring to every project I work on.</p>
+    </div>
+    <div class="side-cards">
+      <div class="side-card tilt-card">
+        <div class="icon">🎓</div>
+        <h3>Education</h3>
+        <p class="role">ICCT Colleges</p>
+        <p class="muted">Institute of Creative Computer Technology</p>
+        <p class="role" style="margin-top:10px;">BS in Information Technology</p>
+        <p class="muted">2025 – Present</p>
+      </div>
+      <div class="side-card tilt-card">
+        <div class="icon">🎯</div>
+        <h3>Career Objective</h3>
+        <p class="muted">To grow as a professional Data Analyst by applying strong Excel, data organization, and problem-solving skills in real-world projects.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="eyebrow">Technical skills</div>
+    <h2>Tools I work with daily</h2>
+    <div class="skill-box-grid">
+      <div class="skill-box">
+        <div class="head"><span class="icon-sq">📄</span> Microsoft Office</div>
+        <div class="pill-row">
+          <span class="pill">Microsoft Excel</span>
+          <span class="pill">Microsoft Word</span>
+          <span class="pill">Microsoft PowerPoint</span>
+          <span class="pill">Microsoft Outlook</span>
+        </div>
+      </div>
+      <div class="skill-box">
+        <div class="head"><span class="icon-sq">📁</span> Google Workspace</div>
+        <div class="pill-row">
+          <span class="pill">Google Sheets</span>
+          <span class="pill">Google Docs</span>
+          <span class="pill">Google Drive</span>
+        </div>
+      </div>
+    </div>
+    <div class="core-skills-title">Core Skills</div>
+    <div class="pill-row">
+      <span class="pill">Data Entry</span>
+      <span class="pill">Virtual Assistance</span>
+      <span class="pill">Administrative Support</span>
+      <span class="pill">Internet Research</span>
+      <span class="pill">Data Collection</span>
+      <span class="pill">Microsoft Excel</span>
+      <span class="pill">Microsoft Word</span>
+      <span class="pill">Microsoft PowerPoint</span>
+      <span class="pill">Google Sheets</span>
+      <span class="pill">Google Docs</span>
+      <span class="pill">File Management</span>
+      <span class="pill">Document Formatting</span>
+      <span class="pill">PDF Conversion</span>
+      <span class="pill">Data Cleaning</span>
+      <span class="pill">Spreadsheet Management</span>
+      <span class="pill">Problem Solving</span>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <div class="eyebrow">Services</div>
+    <h2>What I can help you with</h2>
+    <div class="service-grid">
+      <div class="service-card">
+        <div class="icon-sq">📇</div>
+        <h3>Data Entry</h3>
+        <ul>
+          <li>Accurate data entry</li>
+          <li>Data processing</li>
+          <li>Data verification</li>
+          <li>Data organization</li>
+        </ul>
+      </div>
+      <div class="service-card">
+        <div class="icon-sq">📊</div>
+        <h3>Microsoft Excel Services</h3>
+        <ul>
+          <li>Excel Dashboard Creation</li>
+          <li>Pivot Tables</li>
+          <li>Pivot Charts</li>
+          <li>KPI Dashboards</li>
+          <li>Data Cleaning</li>
+          <li>Spreadsheet Management</li>
+          <li>Conditional Formatting</li>
+          <li>Formula Development</li>
+          <li>Data Analysis</li>
+          <li>Reporting</li>
+        </ul>
+      </div>
+      <div class="service-card">
+        <div class="icon-sq">📝</div>
+        <h3>Administrative Support</h3>
+        <ul>
+          <li>Document Organization</li>
+          <li>Email Management</li>
+          <li>Record Keeping</li>
+          <li>Office Administration</li>
+          <li>File Management</li>
+        </ul>
+      </div>
+      <div class="service-card">
+        <div class="icon-sq">🎧</div>
+        <h3>Virtual Assistance</h3>
+        <ul>
+          <li>Administrative Tasks</li> 
+          <li>Online Research</li>
+          <li>Data Organization</li>
+          <li>Task Management</li>
+        </ul>
+      </div>
+      <div class="service-card">
+        <div class="icon-sq">🔍</div>
+        <h3>Internet Research</h3>
+        <ul>
+          <li>Web Research</li>
+          <li>Product Research</li>
+          <li>Market Research</li>
+          <li>Competitor Research</li>
+          <li>Lead Generation</li>
+          <li>Information Gathering</li>
+        </ul>
+      </div>
+      <div class="service-card">
+        <div class="icon-sq">📄</div>
+        <h3>Document Services</h3>
+        <ul>
+          <li>Microsoft Word Formatting</li>
+          <li>PDF Conversion</li>
+          <li>Document Editing</li>
+          <li>Professional Reports</li>
+          <li>File Conversion</li>
+        </ul>
+      </div>
+      <div class="service-card">
+        <div class="icon-sq">🗄️</div>
+        <h3>Google Workspace Support</h3>
+        <ul>
+          <li>Google Sheets</li>
+          <li>Google Docs</li>
+          <li>Google Drive</li>
+          <li>Shared Collaboration</li>
+        </ul>
+      </div>
+      <div class="service-card">
+        <div class="icon-sq">📈</div>
+        <h3>Data Management</h3>
+        <ul>
+          <li>Data Collection</li>
+          <li>Data Validation</li>
+          <li>Business Reporting</li>
+          <li>Spreadsheet Automation (Basic)</li>
+          <li>Database Organization</li>
+        </ul>
+      </div>
+      <div class="service-card">
+        <div class="icon-sq">👥</div>
+        <h3>Customer Support Assistance</h3>
+        <ul>
+          <li>Customer Record Management</li>
+          <li>Performance Reporting</li>
+          <li>Support Monitoring</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="eyebrow">Projects</div>
+    <h2>Things I've built</h2>
+    <!-- ============================================================
+         PROJECTS SECTION — GABAY / GUIDE
+         Bawat "project-card" sa ibaba ay isang project.
+         Para magdagdag ng bagong project:
+           1. I-copy ang buong <div class="project-card">...</div> block
+           2. Palitan ang onclick key (hal. 'sales-dashboard') ng unique key
+           3. Palitan ang img src ng thumbnail image mo
+           4. I-update ang title, description, at tags
+           5. Idagdag din ang bagong entry sa "galleries" object sa <script>
+              sa ibaba (para gumana ang lightbox/preview kapag na-click)
+    ============================================================= -->
+    <div class="project-grid">
+
+      <!-- PROJECT CARD 1 — duplicate this block for each new project -->
+      <div class="project-card">
+        <div class="project-thumb" onclick="openGallery('sales-dashboard')">
+          <!-- Palitan ang src ng thumbnail/screenshot ng Project 1 mo -->
+          <img src="Customer Support Ticket Performance Dashboard/Dashboard.png" alt="Sales Dashboard project">
+        </div>  
+        <div class="project-body">
+          <h3>Customer Support Ticket Performance Dashboard</h3>
+          <p>Interactive Excel dashboard tracking monthly sales, top products, and regional performance using pivot tables and charts.</p>
+          <div class="project-tags">
+            <span>Excel</span>
+            <span>Pivot Tables</span>
+            <span>Dashboard</span>
+          </div>
+          <a href="#" class="project-link">View Project →</a>
+        </div>
+      </div>
+
+      <!-- PROJECT CARD 2 -->
+      <div class="project-card">
+        <div class="project-thumb" onclick="openGallery('kpi-tracker')">
+          <!-- Palitan ang src ng thumbnail/screenshot ng Project 2 mo -->
+          <img src="Sales Performance Reports with Conditional Formatting/Table.png" alt="KPI Tracker project">
+        </div>
+        <div class="project-body">
+          <h3>Sales Performance Report with Conditional Formatting</h3>
+          <p>Automated KPI tracking sheet with conditional formatting and formulas to flag performance targets in real time.</p>
+          <div class="project-tags">
+            <span>Google Sheets</span>
+            <span>Formulas</span>
+            <span>KPI</span>
+          </div>
+          <a href="#" class="project-link">View Project →</a>
+        </div>
+      </div>
+
+      <!-- PROJECT CARD 3 -->
+      <div class="project-card">
+        <div class="project-thumb" onclick="openGallery('data-cleaning')">
+          <!-- Palitan ang src ng thumbnail/screenshot ng Project 3 mo -->
+          <img src="Data Cleaning Project/Clean Data.png" alt="Data Cleaning project">
+        </div>
+        <div class="project-body">
+          <h3>Data Cleaning Project</h3>
+          <p>Cleaned and organized a messy dataset of customer records, removing duplicates and standardizing formats for reporting.</p>
+          <div class="project-tags">
+            <span>Data Cleaning</span>
+            <span>Excel</span>
+            <span>Reporting</span>
+          </div>
+          <a href="#" class="project-link">View Project →</a>
+        </div>
+      </div>
+
+        <!-- PROJECT CARD 4 -->
+      <div class="project-card">
+        <div class="project-thumb" onclick="openGallery('Pivot Table')">
+          <!-- Palitan ang src ng thumbnail/screenshot ng Project 3 mo -->
+          <img src="Pivot Table/Pivot_Sales by Region.png" alt="Pivot Table">
+        </div>
+        <div class="project-body">
+          <h3>Pivot Table</h3>
+          <p>Designed Pivot Tables to transform raw customer support records into clear summaries, making data analysis and reporting more efficient.</p>
+          <div class="project-tags">
+            <span>Data Cleaning</span>
+            <span>Excel</span>
+            <span>Reporting</span>
+          </div>
+          <a href="#" class="project-link">View Project →</a>
+        </div>
+      </div>
+
+      <!-- PROJECT CARD 5 -->
+      <div class="project-card">
+        <div class="project-thumb" onclick="openGallery('Xlookup')">
+          <!-- Palitan ang src ng thumbnail/screenshot ng Project 3 mo -->
+          <img src="Xlookup/Employee Report_Final Output.png" alt="Xlookup">
+        </div>
+        <div class="project-body">
+          <h3>Xlookup</h3>
+          <p>Applied XLOOKUP to retrieve and match customer records accurately across multiple datasets, improving data organization and reducing manual lookup time.</p>
+          <div class="project-tags">
+            <span>Data Cleaning</span>
+            <span>Excel</span>
+            <span>Reporting</span>
+          </div>
+          <a href="#" class="project-link">View Project →</a>
+        </div>
+      </div>
+
+      <!-- Para sa BAGONG project, i-paste dito ang copy ng isang project-card block,
+           tapos ayusin ang key, img src, h3, p, at tags. -->
+
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+    <div class="wrap">
+
+        <div class="eyebrow">Contact</div>
+        <h2>Let's work together</h2>
+
+        <div class="contact-grid">
+
+            <!-- LEFT --> 
+
+            <div class="contact-info">
+
+                <div class="contact-box">
+                    <div class="contact-icon">✉</div>
+
+                    <div>
+                        <span>EMAIL</span>
+                        <h3>giovannerabe1123@gmail.com</h3>
+                    </div>
+                </div>
+
+                <div class="contact-box">
+                  <div class="contact-icon">
+                     <i class='bx bx-phone'></i>
+                  </div>
+
+                    <div>
+                        <span>PHONE</span>
+                        <h3>+63 977 386 0251</h3>
+                    </div>
+                </div>
+
+                <div class="contact-box">
+                    <div class="contact-icon">
+                    <i class='bx bx-map'></i>
+                  </div>
+                    <div>
+                        <span>LOCATION</span>
+                        <h3>Antipolo City, Rizal, Philippines</h3>
+                    </div>
+                </div>
+
+                <div class="contact-work">
+
+                    <h4>✨ OPEN TO WORK</h4>
+
+                    <p>
+                        Data Analyst, Virtual Assistant,
+                        Administrative Support, and
+                        entry-level IT roles.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- RIGHT -->
+
+           <form id="contact-form" class="contact-form">
+
+                <div class="two-col">
+
+                    <div>
+
+                        <label>FULL NAME</label>
+
+                       <input type="text" name="name" placeholder="Your full name" required>
+
+                    </div>
+
+                    <div>
+
+                        <label>EMAIL</label>
+
+                       <input type="email" name="email" placeholder="Your email" required>
+                    </div>
+
+                </div>
+
+                <label>SUBJECT</label>
+
+               <input type="text" name="subject" placeholder="Your subject" required>
+
+                <label>MESSAGE</label>
+
+                <textarea
+name="message"
+placeholder="Tell me about your project..."
+required></textarea>
+
+              <button type="submit" class="send-btn">
+    <i class='bx bx-send'></i>
+    <span>Send Message</span>
+</button> 
+
+            </form>
+
+        </div>
+
+    </div>
+</section>
+
+<footer>
+  © 2026 Giovanne E. Rabe. All rights reserved.
+</footer>
+
+<!-- LIGHTBOX MODAL -->
+<div id="lightbox-modal" class="lightbox-overlay">
+  <div class="lightbox-content">
+    <div class="lightbox-header">
+      <h3 id="lightbox-title">Project screenshots</h3>
+      <button class="lightbox-close" onclick="closeGallery()">&times;</button>
+    </div>
+    <div class="lightbox-images" id="lightbox-images"></div>
+  </div>
+</div>
+
+<script>
+  // ============================================================
+  // GALLERIES OBJECT — dito nakalagay ang mga larawan na lalabas
+  // sa lightbox/preview kapag na-click ang bawat project thumbnail.
+  // Ang "key" (hal. 'sales-dashboard') ay dapat MATCH sa onclick
+  // attribute ng kaparehong project-thumb sa taas.
+  // I-add/palitan ang mga src ng mga screenshot ng project mo dito.
+  // ============================================================
+  const galleries = {
+    'sales-dashboard': {
+      title: 'Customer Support Ticket Performance Dashboard',   
+      images: [
+        // Palitan ng mga screenshot ng Sales Dashboard project mo
+       'Customer Support Ticket Performance Dashboard/Dashboard.png',
+       'Customer Support Ticket Performance Dashboard/Dashboard Table 1.png ',
+       'Customer Support Ticket Performance Dashboard/Dashboard Table 2.png',
+       'Customer Support Ticket Performance Dashboard/Dashboard Table 3.png',
+       'Customer Support Ticket Performance Dashboard/Tickets by Region.png', 
+       'Customer Support Ticket Performance Dashboard/Tickets by Department.png',
+       'Customer Support Ticket Performance Dashboard/Average Resolution Time per Age.png',
+       'Customer Support Ticket Performance Dashboard/Customer Satisfaction Rating.png',      
+       'Customer Support Ticket Performance Dashboard/Most Common Issues Types.png',
+       
+      
+       
+
+      ] 
+
+        
+    },
+    'kpi-tracker': {    
+      title: 'Sales Performance Report with Conditional Formatting',
+      images: [
+        // Palitan ng mga screenshot ng KPI Tracker project mo
+        'Sales Performance Reports with Conditional Formatting/Table.png',
+        'Sales Performance Reports with Conditional Formatting/Top 5 Sales Reps by Sales.png',
+        'Sales Performance Reports with Conditional Formatting/Sales by Region.png',
+        'Sales Performance Reports with Conditional Formatting/Order Status Distribution.png',
+      ]
+    },
+    'data-cleaning': {
+      title: 'Data Cleaning Project',
+      images: [
+        // Palitan ng mga screenshot ng Data Cleaning project mo
+        'Data Cleaning Project/Clean Data.png',
+        'Data Cleaning Project/Messy table.png',
+        'Data Cleaning Project/Messy Table 2.png',
+      ]
+    },
+    'Pivot Table': {
+      title: 'Pivot Table',
+      images: [
+        // Palitan ng mga screenshot ng Data Cleaning project mo
+        'Pivot Table/Table 1.png',
+        'Pivot Table/Table 2.png',
+        'Pivot Table/Table 3.png',
+        'Pivot Table/Table 4.png',
+        'Pivot Table/Table 5.png',
+        'Pivot Table/Table 6.png',
+        'Pivot Table/Sales by Product.png',
+        'Pivot Table/Sales by Month.png',
+        'Pivot Table/Sales by Category.png',
+        'Pivot Table/Pivot_Sales by Region.png',
+        'Pivot Table/Top 5 Products.png',
+        'Pivot Table/Quantity Sold Analysis.png',
+      ]
+    },
+    'Xlookup': {
+      title: 'Xlookup',
+      images: [
+        // Palitan ng mga screenshot ng Data Cleaning project mo
+        'Xlookup/Employee Database_Table 1.png',
+        'Xlookup/Employee Database_Table 2.png',
+        'Xlookup/Contact Database_table 1.png',
+        'Xlookup/Contact Database_table 2.png',
+        'Xlookup/Employee Report Blank Table.png',
+        'Xlookup/Salary Database-Table.png',
+      ]
+    }
+
+    // Bagong project? Idagdag dito ang bagong key na tugma sa
+    // onclick('your-key') sa project card, hal.:
+    // 'your-key': { title: 'Project Name — screenshots', images: ['file1.png', 'file2.png'] }
+  };
+
+  function openGallery(key){
+    const data = galleries[key];
+    if(!data) return;
+    document.getElementById('lightbox-title').textContent = data.title;
+    document.getElementById('lightbox-images').innerHTML = data.images
+      .map(src => `<img src="${src}" alt="${data.title}">`)
+      .join('');
+    document.getElementById('lightbox-modal').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeGallery(){
+    document.getElementById('lightbox-modal').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('lightbox-modal').addEventListener('click', function(e){
+    if(e.target === this) closeGallery();
+  });
+
+  const cards = document.querySelectorAll('.tilt-card');
+
+cards.forEach(card => {
+
+    card.addEventListener('mousemove', (e) => {
+
+        const rect = card.getBoundingClientRect();
+
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const rotateY = ((x / rect.width) - 0.5) * 12;
+        const rotateX = ((y / rect.height) - 0.5) * -12;
+
+        card.style.transform =
+            `perspective(1000px)
+            rotateX(${rotateX}deg)
+            rotateY(${rotateY}deg)
+            translateY(-6px)`;
+    });
+
+    card.addEventListener('mouseleave', () => {
+        card.style.transform =
+            'perspective(1000px) rotateX(0) rotateY(0)';
+    });
+
+});
+
+const menuToggle = document.querySelector(".menu-toggle");
+const navMenu = document.getElementById("navMenu");
+
+menuToggle.addEventListener("click", () => {
+    navMenu.classList.toggle("active");
+
+    if (navMenu.classList.contains("active")) {
+        menuToggle.innerHTML = "✕";
+    } else {
+        menuToggle.innerHTML = "☰";
+    }
+});
+
+document.querySelectorAll(".nav-links a").forEach(link => {
+    link.addEventListener("click", () => {
+        navMenu.classList.remove("active");
+        menuToggle.innerHTML = "☰";
+    });
+});
+
+</script>
+
+
+<script>
+emailjs.init("8fX0nlfhf7Yh3gY_-");
+</script>
+
+
+<script>
+emailjs.init("8fX0nlfhf7Yh3gY_-");
+
+const form = document.getElementById("contact-form");
+
+form.addEventListener("submit", function(e) {
+
+    e.preventDefault();
+
+    emailjs.sendForm(
+        "service_78mnzsp",
+        "template_w7e5xon",
+        form
+    )
+    .then(function() {
+
+        alert("Message sent successfully!");
+        form.reset();
+
+    })
+    .catch(function(error) {
+
+        alert("Failed to send message.");
+        console.log(error);
+
+    });
+
+});
+</script>
+
+</body>
+</html>
